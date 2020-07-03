@@ -28,7 +28,5 @@ app.get("/profile", (req, res) => {
     res.render("profile", {user: users[0]});
 });
 
-//created server with app.listen 
-app.listen(3000, () => {
-    console.log("PS Project Running on port 3000!");
-});
+//created server with app.listen -> fixed for heroku's dynamic assignment
+app.listen(process.env.PORT || 3000);
