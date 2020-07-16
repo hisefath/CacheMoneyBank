@@ -97,6 +97,11 @@ npm install mongoose
 npm install dotenv --save-dev
 ```
 
+8. This is to protect users of the app, bcrypt to encrypt user passwords
+```
+npm install bcryptjs -S
+```
+
 
 
 
