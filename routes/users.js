@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../passport');
-const { pass } = require('../passport/login');
+const passport = require('../passport/index');
 
 //this is how passport usually works but
 // router.post('/signup', passport.authenticate('local-signup', {
@@ -15,22 +14,32 @@ router.post('/signup', (req, res, next) => {
   //custom passport callback with json
   passport.authenticate('local-signup', function(error, user, info) {
     if(error){
-      res.sendStatus(500).json({
-        message: "Oops, something went wrong",
-        error: error.message ||  'Internal Server Error'
+      return res.status(500).json({
+        message: error || "Oops, something went wrong",
       });
-    } else {
-      return res.json({
-        message: "User is authenticated! :)"
-      });
-    }
+    } 
+    
+    return res.json({
+      message: "User is authenticated and logged in! :)"
+    });
+
   })(req, res, next);
 });
 
-router.post('/login', passport.authenticate('local-login ', {
-  successRedirect: "/",
-  failureRedirect: "/",
-  session: false
-}));
+router.post('/login', (req, res, next) => {
+  //custom passport callback with json
+  passport.authenticate('local-login', function(error, user, info) {
+    if(error){
+      return res.status(500).json({
+        message: error || "Oops, something went wrong",
+      });
+    } 
+    
+    return res.json({
+      message: "User is authenticated and logged in! :)"
+    });
+
+  })(req, res, next);
+});
 
 module.exports = router;
